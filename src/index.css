@@ -1,0 +1,118 @@
+/* Base / Reset-ish */
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
+  background: #0e0e0e; /* dark background */
+  color: #f3f3f3; /* light text */
+  line-height: 1.4;
+}
+
+/* Page title */
+.app > h1 {
+  font-size: 44px;
+  margin: 24px auto 12px;
+  max-width: 1100px;
+  font-weight: 800;
+}
+
+/* Two-column “TV” layout */
+.tv-layout {
+  max-width: 1100px;
+  margin: 0 auto 64px;
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 56px;
+}
+
+/* Panels */
+.panel {
+  background: #141414; /* slightly lighter than page bg */
+  border-radius: 6px;
+  padding: 28px;
+}
+
+/* Left panel heading */
+.panel h2 {
+  margin: 0 0 8px;
+  font-size: 40px;
+  font-weight: 800;
+}
+.subhead {
+  margin: 0 0 20px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #dcdcdc;
+}
+
+/* Episode list */
+.episode-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.episode-item {
+  padding: 14px 0;
+  cursor: pointer;
+  font-size: 20px;
+  color: #eaeaea;
+  transition: background 120ms ease, color 120ms ease, opacity 120ms ease;
+  border-bottom: 1px solid #2a2a2a;
+}
+.episode-item:last-child {
+  border-bottom: none;
+}
+.episode-item:hover {
+  opacity: 0.85;
+}
+.episode-item.is-active {
+  background: #33383c; /* selected row highlight */
+  border-radius: 4px;
+  padding: 14px 12px; /* compensate for radius */
+}
+
+/* Right (detail) panel */
+.detail h3 {
+  margin: 0 0 8px;
+  font-size: 34px; /* Episode number */
+  font-weight: 800;
+  color: #f0f0f0;
+}
+.detail h4 {
+  margin: 0 0 12px;
+  font-size: 28px; /* Episode title */
+  font-weight: 800;
+  color: #ffffff;
+}
+.detail p {
+  margin: 0 0 18px;
+  font-size: 18px;
+  color: #e0e0e0;
+}
+
+/* “Watch now” button */
+.watch-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 12px 16px;
+  margin-top: 8px;
+  border-radius: 4px;
+  background: #e6e6e6; /* light button on dark bg (like screenshot) */
+  color: #111;
+  text-align: center;
+  font-weight: 600;
+  border: 1px solid #cfcfcf;
+  cursor: pointer;
+  user-select: none;
+}
+.watch-btn:hover {
+  filter: brightness(0.95);
+}

@@ -13,26 +13,39 @@ export default function App() {
     <div className="app">
       <h1>Dark Echoes</h1>
 
-      {/* List → separate component */}
-      <EpisodeList episodes={episodes} onSelect={handleSelectedEpisode} />
+      <div className="tv-layout">
+        <div className="panel">
+          <h2>Dark Echoes</h2>
+          <div className="subhead">Episodes</div>
+          <EpisodeList
+            episodes={episodes}
+            onSelect={handleSelectedEpisode}
+            selectedId={selectedEpisode?.id}
+          />
+        </div>
 
-      {/* Detail → separate component */}
-      <EpisodeDetail episode={selectedEpisode} />
+        <div className="panel detail">
+          <EpisodeDetail episode={selectedEpisode} />
+        </div>
+      </div>
     </div>
   );
 }
 
-/** Renders a list of episode names */
-function EpisodeList({ episodes, onSelect }) {
+/** Renders the list and highlights the selected row */
+function EpisodeList({ episodes, onSelect, selectedId }) {
   return (
-    <ul>
-      {episodes.map((episode) => (
+    <ul className="episode-list">
+      {episodes.map((ep) => (
         <li
-          key={episode.id} // better than index
-          onClick={() => onSelect(episode)}
+          key={ep.id}
+          className={
+            "episode-item" + (ep.id === selectedId ? " is-active" : "")
+          }
+          onClick={() => onSelect(ep)}
           style={{ cursor: "pointer" }}
         >
-          {episode.title} {/* show the title field */}
+          {ep.title}
         </li>
       ))}
     </ul>
@@ -43,10 +56,11 @@ function EpisodeList({ episodes, onSelect }) {
 function EpisodeDetail({ episode }) {
   if (!episode) return <p>Please select an episode.</p>;
   return (
-    <div>
-      <h2>{episode.title}</h2>
+    <>
+      <h3>Episode {episode.id}</h3>
+      <h4>{episode.title}</h4>
       <p>{episode.description}</p>
-      <p>Episode #{episode.id}</p>
-    </div>
+      <div className="watch-btn">Watch now</div>
+    </>
   );
 }
