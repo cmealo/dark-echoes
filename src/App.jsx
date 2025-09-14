@@ -17,43 +17,44 @@ export default function App() {
     <div className="app">
       <h1>Dark Echoes</h1>
 
-      {/* 4. Render list of episode titles */}
-      <ul>
-        {episodes.map((episode, index) => (
-          <li
-            key={index} // unique key (better: episode.id if available)
-            onClick={() => handleSelectedEpisode(episode)}
-          >
-            {episode.title} {/* render the episode name */}
-          </li>
-        ))}
-      </ul>
+      {/* List → separate component */}
+      <episodeList episodes={episodes} onSelect={handleSelectedEpisode} />
 
-      {/* 5. Conditional render */}
-      {/* 
-        This uses the "ternary operator" (condition ? trueCase : falseCase).
-        - If selectedEpisode is NOT null (truthy), show the episode details.
-        - If selectedEpisode IS null (falsy), show the "Please select..." message.
-      */}
-      {selectedEpisode ? (
-        // true case → an episode has been clicked
-        <div>
-          {/* show the selected episode’s info */}
-          <h2>{selectedEpisode.title}</h2>
-          <p>{selectedEpisode.description}</p>
-          <p>Episode #{selectedEpisode.id}</p>
-        </div>
-      ) : (
-        // false case → no episode selected yet
-        <p>Please select an episode.</p>
-      )}
+      {/* Detail → separate component */}
+      <EpisodeDetail episode={selectedEpisode} />
+    </div>
+  );
+}
+
+/** Renders a list of episode names */
+function episodeList({ episodes, onSelect }) {
+  return (
+    <ul>
+      {episodes.map((episode, index) => (
+        <li
+          key={index}
+          onClick={() => onSelect(episode)}
+          style={{ cursor: "pointer" }}
+        >
+          {episode}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** Shows details for the selected episode (or a fallback message) */
+function episodeDetail({ episode }) {
+  if (!episode) return <p>Please select an episode.</p>;
+  return (
+    <div>
+      <h2>{episode}</h2>
+      <p>You picked {episode}!</p>
     </div>
   );
 }
 
 /* 
-6. Break out UI into components:
-    - EpisodeList (renders list of titles)
-    - EpisodeDetail (renders details for selected)
+
 7. Add CSS styles in index.css for layout and spacing
 */
