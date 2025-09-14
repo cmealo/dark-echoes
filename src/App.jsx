@@ -2,15 +2,11 @@ import { useState } from "react";
 import { episodeList } from "./data";
 
 export default function App() {
-  // 1. State for list of episodes (imported data)
-  const [episodes, setEpisodes] = useState(episodeList);
-
-  // 2. State for selected episode (null at start)
+  const [episodes] = useState(episodeList);
   const [selectedEpisode, setSelectedEpisode] = useState(null);
 
-  // 3. Function to handle selecting an episode when clicked
   function handleSelectedEpisode(episode) {
-    setSelectedEpisode(episode); // update state to the clicked episode
+    setSelectedEpisode(episode);
   }
 
   return (
@@ -18,7 +14,7 @@ export default function App() {
       <h1>Dark Echoes</h1>
 
       {/* List → separate component */}
-      <episodeList episodes={episodes} onSelect={handleSelectedEpisode} />
+      <EpisodeList episodes={episodes} onSelect={handleSelectedEpisode} />
 
       {/* Detail → separate component */}
       <EpisodeDetail episode={selectedEpisode} />
@@ -27,16 +23,16 @@ export default function App() {
 }
 
 /** Renders a list of episode names */
-function episodeList({ episodes, onSelect }) {
+function EpisodeList({ episodes, onSelect }) {
   return (
     <ul>
-      {episodes.map((episode, index) => (
+      {episodes.map((episode) => (
         <li
-          key={index}
+          key={episode.id} // better than index
           onClick={() => onSelect(episode)}
           style={{ cursor: "pointer" }}
         >
-          {episode}
+          {episode.title} {/* show the title field */}
         </li>
       ))}
     </ul>
@@ -44,17 +40,13 @@ function episodeList({ episodes, onSelect }) {
 }
 
 /** Shows details for the selected episode (or a fallback message) */
-function episodeDetail({ episode }) {
+function EpisodeDetail({ episode }) {
   if (!episode) return <p>Please select an episode.</p>;
   return (
     <div>
-      <h2>{episode}</h2>
-      <p>You picked {episode}!</p>
+      <h2>{episode.title}</h2>
+      <p>{episode.description}</p>
+      <p>Episode #{episode.id}</p>
     </div>
   );
 }
-
-/* 
-
-7. Add CSS styles in index.css for layout and spacing
-*/
